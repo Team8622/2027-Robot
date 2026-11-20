@@ -18,14 +18,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TargetConstants;
 import frc.robot.commands.AnalogCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.ZeroGyro;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -40,8 +36,6 @@ import swervelib.SwerveInputStream;
  */
 public class RobotContainer {
     private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(this);
-    private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-    private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
     private final CommandXboxController driverController = new CommandXboxController(
             ControllerConstants.DRIVER_CONTROLLER_PORT);
@@ -80,12 +74,7 @@ public class RobotContainer {
     }
 
     private void setupPathPlannerCommands() {
-        NamedCommands.registerCommand("Enable Shooter",
-                new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED, true));
-        NamedCommands.registerCommand("Disable Shooter", new AnalogCommand(shooterSubsystem, 0, true));
-        NamedCommands.registerCommand("Enable Intake",
-                new AnalogCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED, true));
-        NamedCommands.registerCommand("Disable Intake", new AnalogCommand(intakeSubsystem, 0, true));
+        
 
         Pose2d hubShootingPointTargetPose = (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get().equals(Alliance.Red)) ? TargetConstants.RED_HUB_POSE3D.toPose2d() : TargetConstants.BLUE_HUB_POSE3D.toPose2d();
 
@@ -104,11 +93,6 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        operatorController.rightTrigger().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.FORWARD_SPEED));
-        operatorController.rightBumper().whileTrue(new AnalogCommand(shooterSubsystem, ShooterConstants.BACKWARD_SPEED));
-
-        operatorController.leftTrigger().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.FORWARD_SPEED));
-        operatorController.leftBumper().onTrue(new ToggleCommand(intakeSubsystem, IntakeConstants.BACKWARD_SPEED));
 
         driverController.y().whileTrue(new ZeroGyro(swerveSubsystem));
     }
