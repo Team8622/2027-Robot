@@ -2,15 +2,8 @@
   "robotWidth": 0.92,
   "robotLength": 0.845,
   "holonomicMode": true,
-  "pathFolders": [
-    "Start Turn to Hub",
-    "Start to Hub"
-  ],
-  "autoFolders": [
-    "Shoot and Intake through Left Trench",
-    "Shoot and Intake through Right Trench",
-    "Shoot at Hub"
-  ],
+  "pathFolders": [],
+  "autoFolders": [],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
